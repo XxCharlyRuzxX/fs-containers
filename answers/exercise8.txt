@@ -1,0 +1,42 @@
+usuario@MacBook-Air-7 ~ % docker container run -d nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+acd43e9bebc3: Pull complete
+78304ff396dd: Pull complete
+2e1b320beddf: Pull complete
+3393e69a7f47: Pull complete
+4a00f4417548: Pull complete
+8d8afada488f: Pull complete
+a42cd3766d86: Pull complete
+Digest: sha256:84f7876d21d154885f99554d7ae325d8c2213f9169726ea7ab60642f2573a787
+Status: Downloaded newer image for nginx:latest
+3ccb18742e4277bd4f0bef6246b6fea4b99f98d160b90b85f077a0fa5e4e3b17
+usuario@MacBook-Air-7 ~ % docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                           NAMES
+3ccb18742e42   nginx     "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   80/tcp                                          clever_gauss
+cb78a06d3f8b   mongo     "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+usuario@MacBook-Air-7 ~ % docker container stop keen_darwin
+Error response from daemon: No such container: keen_darwin
+usuario@MacBook-Air-7 ~ % docker container stop clever_gauss
+clever_gauss
+usuario@MacBook-Air-7 ~ % docker container rm clever_gauss
+clever_gauss
+usuario@MacBook-Air-7 ~ % docker container run -d -p 8080:80 nginx
+c37de74d9c5d2362b0e52c5c00b1f80b3e3ca46fe18eb34002bfe0ea8565659b
+usuario@MacBook-Air-7 ~ % docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                           NAMES
+c37de74d9c5d   nginx     "/docker-entrypoint.…"   12 seconds ago   Up 11 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp         awesome_hertz
+cb78a06d3f8b   mongo     "docker-entrypoint.s…"   5 minutes ago    Up 5 minutes    0.0.0.0:3456->27017/tcp, [::]:3456->27017/tcp   todo-backend-mongo-1
+usuario@MacBook-Air-7 ~ % docker exec -it awesome_hertz bash
+root@c37de74d9c5d:/# cd /usr/share/nginx/html/
+root@c37de74d9c5d:/usr/share/nginx/html# rm index.html
+root@c37de74d9c5d:/usr/share/nginx/html# echo "Hello, exec!" > index.html
+root@c37de74d9c5d:/usr/share/nginx/html# exit
+exit
+
+What's next:
+    Try Docker Debug for seamless, persistent debugging tools in any container or image → docker debug awesome_hertz
+    Learn more at https://docs.docker.com/go/debug-cli/
+usuario@MacBook-Air-7 ~ % docker commit awesome_hertz nginx-modificado:v1
+sha256:a09ab13daa672fbaa5138a62562fb4962e237d1c1c20443325df2b79eb773f04
+
